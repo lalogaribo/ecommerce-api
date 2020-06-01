@@ -6,7 +6,7 @@ class Api::V1::UsersController < ApplicationController
     if user.save
       render json: user, status: :created
     else
-      render json: { errors: user.errors.full_messages}, status: :unprocessable_entity
+      render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -26,7 +26,7 @@ class Api::V1::UsersController < ApplicationController
 
     def user_params
       params.permit(:user).require(:first_name, :last_name, :email,
-                                   :phone_number, :address, :zip_code)
+                                   :phone_number, :address, :zip_code, :password)
     end
 
     def set_user

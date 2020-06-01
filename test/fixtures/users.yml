@@ -1,19 +1,19 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  first_name: MyString
-  last_name: MyString
-  email: MyString
-  phone_number: MyString
-  is_admin: MyString
-  address: MyString
-  zip_code: MyString
+  first_name: Eduardo
+  last_name: Mendoza
+  email: edd@gmail.com
+  phone_number: 31232131
+  is_admin: false
+  address: main st
+  zip_code: 93722
 
 two:
-  first_name: MyString
-  last_name: MyString
-  email: MyString
+  first_name: Carlos
+  last_name: Ramire
+  email: carlos@gmail.com
   phone_number: MyString
-  is_admin: MyString
+  is_admin: false
   address: MyString
   zip_code: MyString
