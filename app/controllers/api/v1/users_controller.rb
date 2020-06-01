@@ -1,6 +1,6 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :set_user, only: [:update, :show, :destroy]
-  before_action :check_owner, only: [:update, :destroy]
+  before_action :set_user, only: [:update, :destroy, :show]
+  before_action :check_owner, only: [:update, :destroy, :show]
 
   def create
     user = User.new(user_params)
