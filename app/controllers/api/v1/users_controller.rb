@@ -1,10 +1,12 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :set_user, only: [:update, :show, :destroy]
+  before_action :set_user, only: [:update, :destroy, :show]
+  before_action :check_owner, only: [:update, :destroy, :show]
 
   def create
     user = User.new(user_params)
     if user.save
-      render json: user, status: :created
+      token = JsonWebToken.encode(user_id: user.id)
+      render json: { user: user, token: token }, status: :created
     else
       render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
     end
@@ -36,5 +38,9 @@ class Api::V1::UsersController < ApplicationController
 
     def set_user
       @user = User.find(params[:id])
+    end
+
+    def check_owner
+      head :forbidden unless @user.id == current_user&.id
     end
 end
