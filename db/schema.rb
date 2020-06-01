@@ -15,13 +15,15 @@ ActiveRecord::Schema.define(version: 2020_06_01_175537) do
   create_table "users", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
-    t.string "email"
+    t.string "email", null: false
     t.string "phone_number"
-    t.boolean "is_admin"
+    t.boolean "is_admin", default: false
     t.string "address"
     t.string "zip_code"
+    t.string "password_digest", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
   end
 
 end
