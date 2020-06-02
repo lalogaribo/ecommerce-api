@@ -6,7 +6,7 @@ class Api::V1::UsersController < ApplicationController
     user = User.new(user_params)
     if user.save
       token = JsonWebToken.encode(user_id: user.id)
-      render json: { user: user, token: token }, status: :created
+      render json: { user: serialized_response(user), token: token }, status: :created
     else
       render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
     end
@@ -14,14 +14,14 @@ class Api::V1::UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      render json: @user, status: :ok
+      render json: { user: serialized_response(@user) }, status: :ok
     else
       render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   def show
-    render json: @user, status: :ok
+    render json: { user: serialized_response(@user) }, status: :ok
   end
 
   def destroy
@@ -42,5 +42,9 @@ class Api::V1::UsersController < ApplicationController
 
     def check_owner
       head :forbidden unless @user.id == current_user&.id
+    end
+
+    def serialized_response(model)
+      UserSerializer.new(model)
     end
 end

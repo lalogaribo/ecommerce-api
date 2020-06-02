@@ -5,28 +5,28 @@ class Api::V1::ProductsController < ApplicationController
 
   def index
     products = Product.all
-    render json: { data: { count: products.count, products: products } }, status: :ok
+    render json: { products: products }, status: :ok
   end
 
   def show
-    render json: @product, status: :ok
+    render json: { product: serialized_response(@product) }, status: :ok
   end
 
   def create
     new_product = current_user.products.build(product_params)
     if new_product.save
-      render json: new_product, status: :created
+      render json: { product: serialized_response(new_product) }, status: :created
     else
-      render json: { errors: new_product.errors.full_messages },
+      render json:   { errors: new_product.errors.full_messages },
              status: :unprocessable_entity
     end
   end
 
   def update
     if @product.update(product_params)
-      render json: @product, status: :ok
+      render json: serialized_response(@product), status: :ok
     else
-      render json: { errors: @product.errors.full_messages },
+      render json:   { errors: @product.errors.full_messages },
              status: :unprocessable_entity
     end
   end
@@ -38,18 +38,22 @@ class Api::V1::ProductsController < ApplicationController
 
   private
 
-  def set_item
-    @product = Product.find(params[:id])
-  end
-
-  def product_params
-    params.require(:product).permit(:name, :description, :quantity, :price, :image, :type_id, :time_to_make)
-  end
-
-  def check_owner_admin
-    unless is_admin_user? && current_user.id == @product.user_id
-      render json: { error: 'You dont have permission to modify the product' },
-             status: :unauthorized
+    def set_item
+      @product = Product.find(params[:id])
     end
-  end
+
+    def product_params
+      params.require(:product).permit(:name, :description, :quantity, :price, :image, :type_id, :time_to_make)
+    end
+
+    def check_owner_admin
+      unless is_admin_user? && current_user.id == @product.user_id
+        render json:   { error: 'You dont have permission to modify the product' },
+               status: :unauthorized
+      end
+    end
+
+    def serialized_response(model)
+      ProductSerializer.new(model)
+    end
 end
