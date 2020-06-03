@@ -4,8 +4,8 @@ class Api::V1::ProductsController < ApplicationController
   before_action :check_admin_user, only: [:create]
 
   def index
-    products = Product.all
-    render json: { products: products }, status: :ok
+    products = Product.search(params)
+    render json: products, status: :ok
   end
 
   def show
