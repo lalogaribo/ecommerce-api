@@ -1,6 +1,8 @@
 class Product < ApplicationRecord
   belongs_to :type
   belongs_to :user
+  has_many :placements, dependent: :destroy
+  has_many :orders, through: :placements
   validates :name, presence: true, length: { minimum: 5, maximum: 255 }
   validates :description, presence: true, length: { minimum: 5, maximum: 255 }
   validates :quantity, numericality: { only_integer: true, greater_than: 1 }
