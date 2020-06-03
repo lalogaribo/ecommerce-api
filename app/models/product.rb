@@ -7,4 +7,9 @@ class Product < ApplicationRecord
   validates :price, numericality: { greater_than: 1 }
   validates :type_id, presence: true
   validates :image, presence: true
+
+  scope :filter_by_product_name, ->(keyword) { where('lower(name) LIKE ?', "%#{keyword.downcase}%") }
+  scope :above_or_equal_price, ->(price) { where('price >= ?', price) }
+  scope :below_or_equal_price, ->(price) { where('price < ?', price) }
+  scope :most_recent_products, -> { order(:updated_at) }
 end
