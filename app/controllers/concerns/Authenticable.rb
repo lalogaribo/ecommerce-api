@@ -14,7 +14,7 @@ module Authenticable
   end
 
   def check_login
-    render json: { error: 'Sign in to see your orders' }, status: :unauthorized unless current_user
+    render json: { error: 'You need to sign in' }, status: :unauthorized unless current_user
   end
 
   def check_admin_user
