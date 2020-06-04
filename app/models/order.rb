@@ -1,4 +1,5 @@
 class Order < ApplicationRecord
+  include ActiveModel::Validations
   before_validation :set_total!
 
   belongs_to :user
@@ -6,6 +7,7 @@ class Order < ApplicationRecord
   has_many :products, through: :placements
   validates :total, numericality: { greater_than_or_equal_to: 0 }
   validates :total, presence: true
+  validates_with :EnoughProductsValidator
 
   def set_total!
     self.total = products.map(&:price).sum
