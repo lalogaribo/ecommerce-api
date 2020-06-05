@@ -2,7 +2,6 @@
 <p>You ordered <%= @order.products.count %> products:</p>
 <ul>
   <% @order.products.each do |product| %>
-    <li><%= product.name %> - <%= number_to_currency product
-                                                      .price %></li>
+    <li><%= product.name %> - <%= product.quantity %> - <%= number_to_currency product.price %> ></li>
   <% end %>
 </ul>

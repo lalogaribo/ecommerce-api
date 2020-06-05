@@ -1,7 +1,6 @@
 class Api::V1::OrdersController < ApplicationController
   before_action :check_login, only: %i[index create show]
 
-
   def index
     return render json: { message: 'You dont have orders yet' } if current_user.orders.empty?
 
