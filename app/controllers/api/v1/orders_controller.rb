@@ -18,7 +18,7 @@ class Api::V1::OrdersController < ApplicationController
   end
 
   def create
-    order = Order.create! user: current_user
+    order = Order.new(user: current_user)
     order.create_placement(order_params[:product_ids_and_quantities])
     if order.save
       OrderMailer.send_confirmation(order).deliver
