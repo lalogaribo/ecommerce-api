@@ -13,6 +13,10 @@ module Authenticable
     @current_user.is_admin
   end
 
+  def check_login
+    render json: { error: 'You need to sign in' }, status: :unauthorized unless current_user
+  end
+
   def check_admin_user
     render json: { error: 'Only admin user can perform this action' }, status: :unauthorized unless current_user && is_admin_user?
   end
