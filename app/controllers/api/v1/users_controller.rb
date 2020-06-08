@@ -6,7 +6,7 @@ class Api::V1::UsersController < ApplicationController
     user = User.new(user_params)
     if user.save
       token = JsonWebToken.encode(user_id: user.id)
-      render json: { user: serialized_response(user), token: token }, status: :created
+      render json: { data: { user: serialized_response(user), token: token } }, status: :created
     else
       render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
     end
@@ -21,7 +21,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def show
-    render json: { user: serialized_response(@user) }, status: :ok
+    render json: { data: { user: serialized_response(@user) } }, status: :ok
   end
 
   def destroy
