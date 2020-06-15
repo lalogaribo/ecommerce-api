@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       end
       resources :products, only: %i[index show]
       resources :orders, only: %i[index show create]
+      resources :types, only: %i[index show]
     end
   end
 
