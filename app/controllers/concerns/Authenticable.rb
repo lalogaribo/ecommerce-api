@@ -10,7 +10,7 @@ module Authenticable
   end
 
   def is_admin_user?
-    @current_user.is_admin
+    current_user.is_admin
   end
 
   def check_login

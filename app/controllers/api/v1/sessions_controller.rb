@@ -4,7 +4,7 @@ class Api::V1::SessionsController < ApplicationController
     if user&.authenticate(login_params[:password])
       render json: {
         data: {
-          user:  user,
+          user:  UserSerializer.new(user),
           token: JsonWebToken.encode(user_id: user.id)
         }
       }
